@@ -1,21 +1,18 @@
 export type User = {
   id: string;
-  email: string;
+  user: {
+    id: string;
+    email: string;
+  };
 };
 
 export function fetchUsers() {
-  return fetch("http://localhost:3001/users")
-    .then((res) => res.json())
-    .then((data) => {
-      return data.map((item: { id: string; user: User }) => ({
-        id: item.user.id,
-        email: item.user.email,
-      }));
-    });
+  return fetch("http://localhost:3001/users").then(
+    (res) => res.json() as Promise<User[]>,
+  );
 }
 
 export function createUser(user: User) {
-  console.log(user);
   return fetch("http://localhost:3001/users", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
